@@ -11,6 +11,7 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import Home from './View/Home'
 import About from './View/About'
+import Product from './View/Product'
 
 
 
@@ -26,6 +27,9 @@ function App() {
             </Route>
             <Route path="/about">
               <About/>
+            </Route>
+            <Route path="/product/:id">
+              <Product/>
             </Route>
           </Switch>
         </div>
