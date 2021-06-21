@@ -4,6 +4,9 @@ import {
 } from "react-router-dom"
 
 function NavigationMenu(props){
+  let rand = Math.floor(Math.random() * 10) + 1;
+  console.log(rand)
+  let link = '/product/'+rand
   return(
     <div>
     <div className="font-bold py-3">
@@ -21,7 +24,9 @@ function NavigationMenu(props){
       </li>
       <li>
         <Link
-          to="/product"
+          to={link}
+
+          params={rand}
           className="text-blue-500 py-3 border-b block"
           onClick = {props.closeMenu}
         >
