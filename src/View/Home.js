@@ -3,46 +3,68 @@ import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import Loader from '../Components/Loader'
 import HelloWorld from '../Components/HelloWorld'
+import ProductCard from '../Components/ProductCard'
+
 
 function Home(){
   let content = null
-  const {id} = useParams()
-    const url = `https://60cbfbd371b73400171f6cfb.mockapi.io/api/v1/products/${id}`
-    const [product,setProduct]= useState({
+    const url = `https://60cbfbd371b73400171f6cfb.mockapi.io/api/v1/products?page=1&limit=10`
+    const [products,setProducts]= useState({
       loading: false,
       data: null,
       error:false
     })
 
   useEffect(()=>{
-      setProduct({
+      setProducts({
           loading:true,
           data:null,
           error:false
       })
       axios.get(url)
         .then(response=>{
-          setProduct({
+          setProducts({
               loading: false,
               data: response.data,
               error:false
           })
         })
         .catch(()=>{
-          setProduct({
+          setProducts({
               loading:false,
               data:null,
               error:true
           })
         })
     },[url])
+
+  if(products.loading){
+    content = <Loader/>
+  }
+
+  if(products.error){
+    content =
+      <p>
+          There was an error please refresh or try again later
+      </p>
+  }
+
+  if(products.data){
+    content = products.data.map((product,key) =>
+        <div key={product.id}>
+          <ProductCard
+            product = {product}
+            />
+        </div>
+    )
+  }
+
   return(
     <div>
         <h1 className="font-bold text-2xl">
             Best Sellers
         </h1>
         {content}
-        /*<HelloWorld name="Nanda"/>*/
     </div>
   )
 }
